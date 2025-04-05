@@ -109,7 +109,7 @@
       const qDiv = document.createElement("div");
       qDiv.className = "question";
       qDiv.innerHTML = `<p>${i + 1}. ${q}</p>` +
-        options.map(opt => `<label><input type="radio" name="q${i}" value="${opt.value}"> ${opt.label}</label>`).join("");
+        options.map(opt => `<div><label><input type=\"radio\" name=\"q\${i}\" value=\"\${opt.value}\"> \${opt.label}</label></div>`).join("");
       form.appendChild(qDiv);
     });
 
@@ -145,10 +145,10 @@
       document.getElementById("result").innerHTML = `
         <h3>당신의 관계 유형은: ${type}</h3>
         <p>${descriptions[type]}</p>
-        <p><strong>추천 활동:</strong> 엄마와의 관계온도를 높이고 싶다면? <a href='https://graceb007.github.io/saiculture/' target='_blank' style='color:#d94b67; text-decoration:underline;'>‘엄마랑 1박 2일’ 캠프 지금 보러가기 →</a></p>
+        <p><strong>추천 활동:</strong> 엄마와의 관계온도를 높이고 싶다면? <a href='https://new.stjohns.co.kr/post/3737' target='_blank' style='color:#d94b67; text-decoration:underline;'>‘엄마랑 1박 2일’ 캠프 지금 보러가기 →</a></p>
         <div style='margin-top:1rem;'>
   <strong>공유하기:</strong><br>
-  <a href='https://share.kakao.com/talk?url=https://graceb007.github.io/saiculture/&text=우리사이%20관계온도테스트에서%20${type}%20유형이%20나왔어요!' target='_blank'>💛 카카오톡으로 공유하기</a>
+  <a href='https://share.kakao.com/talk?url=https://graceb007.github.io/rxdm-test/&text=엄마와의%20관계를%20돌아보는%20%22우리사이%20관계온도%20테스트%22%20지금%20해보세요!' target='_blank'>💛 카카오톡으로 공유하기</a>
 </div>`;
     }
   </script>
