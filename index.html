@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>관계진단 테스트 | RXDM</title>
+  <title>우리사이 관계온도 테스트 | RXDM</title>
   <style>
     body {
       font-family: 'Pretendard', sans-serif;
@@ -64,52 +64,65 @@
 </head>
 <body>
   <header>
-    <h1>RXDM 기반 무료 관계진단 테스트</h1>
-    <p>당신의 관계 유형은 무엇인가요?</p>
+    <h1>우리사이 관계온도 테스트</h1>
+    <p>엄마와 자녀 사이의 관계는 지금 몇 도쯤일까요?</p>
   </header>
   <main>
-    <form id="testForm">
-      <div class="question">
-        <p>1. 우리는 감정을 솔직하게 나누는 편이다.</p>
-        <div class="options">
-          <label><input type="radio" name="q1" value="협력형"> 매우 그렇다</label>
-          <label><input type="radio" name="q1" value="의존형"> 그렇다</label>
-          <label><input type="radio" name="q1" value="회피형"> 아니다</label>
-        </div>
-      </div>
-      <div class="question">
-        <p>2. 우리는 갈등을 잘 해결하는 편이다.</p>
-        <div class="options">
-          <label><input type="radio" name="q2" value="협력형"> 매우 그렇다</label>
-          <label><input type="radio" name="q2" value="갈등형"> 아니다</label>
-          <label><input type="radio" name="q2" value="형식형"> 보통이다</label>
-        </div>
-      </div>
-      <div class="question">
-        <p>3. 상대방에게 의존하거나 기대는 편이다.</p>
-        <div class="options">
-          <label><input type="radio" name="q3" value="의존형"> 매우 그렇다</label>
-          <label><input type="radio" name="q3" value="복합형"> 보통이다</label>
-          <label><input type="radio" name="q3" value="통합형"> 아니다</label>
-        </div>
-      </div>
-      <div class="question">
-        <p>4. 우리는 감정 표현보다는 역할과 예의를 중시한다.</p>
-        <div class="options">
-          <label><input type="radio" name="q4" value="형식형"> 매우 그렇다</label>
-          <label><input type="radio" name="q4" value="회피형"> 그렇다</label>
-          <label><input type="radio" name="q4" value="협력형"> 아니다</label>
-        </div>
-      </div>
-      <button type="button" onclick="calculateResult()">결과 보기</button>
-    </form>
+    <form id="testForm"></form>
     <div id="result" class="result" style="display:none;"></div>
   </main>
   <script>
+    const questions = [
+      "나는 엄마와 함께 있으면 마음이 편안하고 안정감을 느낀다.",
+      "우리는 서로의 감정을 표현하고 공감하려고 노력한다.",
+      "엄마와 나는 서로 다른 생각을 인정하고 존중한다.",
+      "어려운 상황에서 엄마는 내 편이 되어준다.",
+      "우리는 갈등이 생겨도 감정적으로 폭발하지 않고 대화로 해결한다.",
+      "나는 엄마에게 모든 것을 말할 수 있다고 느낀다.",
+      "엄마는 내 선택을 지지하지만 간섭하지 않는다.",
+      "나는 엄마의 기대에 부응하지 못할 때 죄책감을 느낀다.",
+      "우리는 서로의 시간을 존중하고 간섭하지 않는다.",
+      "나는 엄마 없이 결정하기 어려울 때가 많다.",
+      "엄마와의 관계에서 나만 노력한다고 느낄 때가 있다.",
+      "우리는 사소한 갈등으로도 감정이 크게 상하는 경우가 있다.",
+      "엄마는 내 감정보다 자신의 입장을 더 강조한다.",
+      "우리는 서로에게 거리감을 두고 지내는 편이다.",
+      "나는 엄마와 깊은 대화를 나누는 것이 어렵다.",
+      "우리는 서로가 어떤 사람인지 잘 알고 있다고 느낀다.",
+      "나는 엄마와의 관계가 계속 발전하고 있다고 느낀다.",
+      "엄마와 나는 새로운 것을 함께 시도하고 배운다.",
+      "나는 엄마에게 기대지 않아도 스스로 설 수 있다.",
+      "우리는 서로의 차이를 이해하고 긍정적으로 수용한다.",
+      "엄마와 나는 서로의 삶에 건강한 영향을 주고받는다."
+    ];
+
+    const options = [
+      { label: "매우 그렇다", value: "통합형" },
+      { label: "어느 정도 그렇다", value: "협력형" },
+      { label: "보통이다", value: "의존형" },
+      { label: "그렇지 않다", value: "형식형" },
+      { label: "전혀 아니다", value: "회피형" }
+    ];
+
+    const form = document.getElementById("testForm");
+    questions.forEach((q, i) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+      qDiv.innerHTML = `<p>${i + 1}. ${q}</p>` +
+        options.map(opt => `<label><input type="radio" name="q${i}" value="${opt.value}"> ${opt.label}</label>`).join("");
+      form.appendChild(qDiv);
+    });
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.innerText = "결과 보기";
+    btn.onclick = calculateResult;
+    form.appendChild(btn);
+
     function calculateResult() {
-      const form = document.forms["testForm"];
-      const answers = [form.q1.value, form.q2.value, form.q3.value, form.q4.value];
-      if (answers.includes("")) {
+      const answers = Array.from(document.querySelectorAll("input[type='radio']:checked"))
+        .map(input => input.value);
+      if (answers.length < questions.length) {
         alert("모든 문항에 응답해주세요.");
         return;
       }
@@ -119,14 +132,14 @@
       const type = sorted[0][0];
 
       const descriptions = {
-        "협력형": "협력형 관계는 유연한 소통과 상호 지지가 특징입니다. 현재의 관계를 더욱 깊이 있게 발전시킬 수 있는 경험을 추천드립니다.",
-        "의존형": "의존형 관계는 애착이 깊지만, 균형이 필요한 시점일 수 있습니다. 독립성과 경계 설정을 위한 경험이 필요합니다.",
-        "갈등형": "갈등형 관계는 솔직함이 강점이지만, 감정 조절과 경청이 중요합니다. 긍정적 갈등 해소 경험을 설계해보세요.",
-        "회피형": "회피형 관계는 안정적이지만 연결감이 부족할 수 있습니다. 감정 공유와 취약성 탐색 경험이 도움이 됩니다.",
-        "복합형": "복합형 관계는 예측 불가능하고 감정의 진폭이 큽니다. 일관성과 안정감을 주는 경험이 필요합니다.",
-        "형식형": "형식형 관계는 예의는 있지만 진정성 있는 교류가 부족할 수 있습니다. 감정 표현과 스토리텔링 경험을 활용해보세요.",
-        "통합형": "통합형 관계는 성장 지향적이고 유연성이 뛰어납니다. 공동 목표와 미래 비전 설정을 통해 더 깊은 관계로 나아갈 수 있습니다."
-      };
+  "협력형": "☀️ 따뜻한 온도(25~29도): 유연한 소통과 상호 지지로 안정된 관계를 만들어갑니다.<br><strong>도움말 TIP:</strong> 감정을 더 자주 표현하고, 서로의 일상에 조금 더 관심을 가져보세요.",
+  "의존형": "🌡️ 약간 뜨거운 온도(30~32도): 애착은 깊지만 균형이 필요한 시점입니다. 스스로 서는 경험이 필요합니다.<br><strong>도움말 TIP:</strong> 자율성을 키우고, 서로 기대는 방식에 대해 대화해보세요.",
+  "갈등형": "🔥 과열된 온도(33~35도): 갈등이 잦고 감정적 충돌이 많습니다. 감정 조절 훈련이 중요합니다.<br><strong>도움말 TIP:</strong> 갈등 시 침착하게 말하는 연습과 경청 기술을 함께 익혀보세요.",
+  "회피형": "🧊 냉랭한 온도(10~15도): 거리감과 침묵이 큰 특징입니다. 감정 공유의 연습이 필요합니다.<br><strong>도움말 TIP:</strong> 사소한 이야기부터 조금씩 대화를 시작해보세요. 감정을 나눌 수 있는 시간을 만들어보는 것이 좋아요.",
+  "복합형": "🌪️ 변화무쌍한 온도(변동 폭 큼): 가까웠다가 멀어지는 롤러코스터 관계입니다. 안정감과 일관성 훈련이 필요합니다.<br><strong>도움말 TIP:</strong> 예측 가능한 소통 루틴을 만들고, 감정 변화에 대해 함께 이야기해보세요.",
+  "형식형": "🌫️ 겉만 따뜻한 온도(20도): 예의는 있지만 진심이 부족할 수 있어요. 진정성 있는 교류가 중요합니다.<br><strong>도움말 TIP:</strong> 역할이 아닌 사람 대 사람으로 대화해보는 시간을 가져보세요.",
+  "통합형": "🌈 이상적인 온도(26~28도): 유연성과 자율성을 바탕으로 함께 성장하는 관계입니다. 지속적 돌봄과 실천이 중요합니다.<br><strong>도움말 TIP:</strong> 현재의 관계를 유지하면서, 함께 도전할 수 있는 새로운 경험을 계획해보세요."
+};
 
       document.getElementById("result").style.display = "block";
       document.getElementById("result").innerHTML = `<h3>당신의 관계 유형은: ${type}</h3><p>${descriptions[type]}</p>`;
