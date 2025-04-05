@@ -65,7 +65,7 @@
 <body>
   <header>
     <h1>우리사이 관계온도 테스트</h1>
-    <p>엄마와 나, 우리 사이의 관계는 지금 몇 도일까요?</p>
+    <p>엄마와 자녀 사이의 관계는 지금 몇 도쯤일까요?</p>
   </header>
   <main>
     <form id="testForm"></form>
@@ -146,11 +146,13 @@
         <h3>당신의 관계 유형은: ${type}</h3>
         <p>${descriptions[type]}</p>
         <p><strong>추천 활동:</strong> 엄마와의 관계온도를 높이고 싶다면? <a href='https://new.stjohns.co.kr/post/3737' target='_blank' style='color:#d94b67; text-decoration:underline;'>‘엄마랑 1박 2일’ 캠프 지금 보러가기 →</a></p>
-        <div style='margin-top:1rem;'>
-  <strong>공유하기:</strong><br>
-  <a href='https://share.kakao.com/talk?url=https://graceb007.github.io/rxdm-test/&text=엄마와의%20관계를%20돌아보는%20%22우리사이%20관계온도%20테스트%22%20지금%20해보세요!' target='_blank'>💛 카카오톡으로 공유하기</a>
-</div>`;
+        <button onclick="copyLink()">🔗 테스트 링크 복사하기</button>`;
     }
-  </script>
+  function copyLink() {
+  navigator.clipboard.writeText("https://graceb007.github.io/rxdm-test/")
+    .then(() => alert("테스트 링크가 복사되었습니다!"))
+    .catch(err => alert("복사에 실패했어요. 브라우저를 확인해주세요."));
+}
+</script>
 </body>
 </html>
