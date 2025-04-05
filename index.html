@@ -109,7 +109,7 @@
       const qDiv = document.createElement("div");
       qDiv.className = "question";
       qDiv.innerHTML = `<p>${i + 1}. ${q}</p>` +
-        options.map(opt => `<div><label><input type="radio" name="q\${i}" value="\${opt.value}" required> \${opt.label}</label></div>`).join("");
+        options.map(opt => `<div><label><input type="radio" name="q${i}" value="${opt.value}" required> ${opt.label}</label></div>`).join("");
       form.appendChild(qDiv);
     });
 
