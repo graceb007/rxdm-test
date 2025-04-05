@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관계진단 테스트 | RXDM</title>
+  <style>
+    body {
+      font-family: 'Pretendard', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
+      color: #333;
+    }
+    header {
+      background-color: #ffe6ea;
+      padding: 2rem;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    h2 {
+      color: #d94b67;
+    }
+    .question {
+      margin-bottom: 1.5rem;
+    }
+    .question p {
+      font-weight: 600;
+    }
+    .options label {
+      display: block;
+      margin: 0.5rem 0;
+    }
+    button {
+      background-color: #d94b67;
+      color: #fff;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #bf3c56;
+    }
+    .result {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background-color: #fafafa;
+      border-left: 5px solid #d94b67;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>RXDM 기반 무료 관계진단 테스트</h1>
+    <p>당신의 관계 유형은 무엇인가요?</p>
+  </header>
+  <main>
+    <form id="testForm">
+      <div class="question">
+        <p>1. 우리는 감정을 솔직하게 나누는 편이다.</p>
+        <div class="options">
+          <label><input type="radio" name="q1" value="협력형"> 매우 그렇다</label>
+          <label><input type="radio" name="q1" value="의존형"> 그렇다</label>
+          <label><input type="radio" name="q1" value="회피형"> 아니다</label>
+        </div>
+      </div>
+      <div class="question">
+        <p>2. 우리는 갈등을 잘 해결하는 편이다.</p>
+        <div class="options">
+          <label><input type="radio" name="q2" value="협력형"> 매우 그렇다</label>
+          <label><input type="radio" name="q2" value="갈등형"> 아니다</label>
+          <label><input type="radio" name="q2" value="형식형"> 보통이다</label>
+        </div>
+      </div>
+      <div class="question">
+        <p>3. 상대방에게 의존하거나 기대는 편이다.</p>
+        <div class="options">
+          <label><input type="radio" name="q3" value="의존형"> 매우 그렇다</label>
+          <label><input type="radio" name="q3" value="복합형"> 보통이다</label>
+          <label><input type="radio" name="q3" value="통합형"> 아니다</label>
+        </div>
+      </div>
+      <div class="question">
+        <p>4. 우리는 감정 표현보다는 역할과 예의를 중시한다.</p>
+        <div class="options">
+          <label><input type="radio" name="q4" value="형식형"> 매우 그렇다</label>
+          <label><input type="radio" name="q4" value="회피형"> 그렇다</label>
+          <label><input type="radio" name="q4" value="협력형"> 아니다</label>
+        </div>
+      </div>
+      <button type="button" onclick="calculateResult()">결과 보기</button>
+    </form>
+    <div id="result" class="result" style="display:none;"></div>
+  </main>
+  <script>
+    function calculateResult() {
+      const form = document.forms["testForm"];
+      const answers = [form.q1.value, form.q2.value, form.q3.value, form.q4.value];
+      if (answers.includes("")) {
+        alert("모든 문항에 응답해주세요.");
+        return;
+      }
+      const count = {};
+      answers.forEach(ans => count[ans] = (count[ans] || 0) + 1);
+      const sorted = Object.entries(count).sort((a, b) => b[1] - a[1]);
+      const type = sorted[0][0];
+
+      const descriptions = {
+        "협력형": "협력형 관계는 유연한 소통과 상호 지지가 특징입니다. 현재의 관계를 더욱 깊이 있게 발전시킬 수 있는 경험을 추천드립니다.",
+        "의존형": "의존형 관계는 애착이 깊지만, 균형이 필요한 시점일 수 있습니다. 독립성과 경계 설정을 위한 경험이 필요합니다.",
+        "갈등형": "갈등형 관계는 솔직함이 강점이지만, 감정 조절과 경청이 중요합니다. 긍정적 갈등 해소 경험을 설계해보세요.",
+        "회피형": "회피형 관계는 안정적이지만 연결감이 부족할 수 있습니다. 감정 공유와 취약성 탐색 경험이 도움이 됩니다.",
+        "복합형": "복합형 관계는 예측 불가능하고 감정의 진폭이 큽니다. 일관성과 안정감을 주는 경험이 필요합니다.",
+        "형식형": "형식형 관계는 예의는 있지만 진정성 있는 교류가 부족할 수 있습니다. 감정 표현과 스토리텔링 경험을 활용해보세요.",
+        "통합형": "통합형 관계는 성장 지향적이고 유연성이 뛰어납니다. 공동 목표와 미래 비전 설정을 통해 더 깊은 관계로 나아갈 수 있습니다."
+      };
+
+      document.getElementById("result").style.display = "block";
+      document.getElementById("result").innerHTML = `<h3>당신의 관계 유형은: ${type}</h3><p>${descriptions[type]}</p>`;
+    }
+  </script>
+</body>
+</html>
