@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>우리사이 관계온도 테스트 | RXDM</title>
+  <title>우리사이 관계온도 테스트 | 사이컬처</title>
   <style>
     body {
       font-family: 'Pretendard', sans-serif;
@@ -142,7 +142,14 @@
 };
 
       document.getElementById("result").style.display = "block";
-      document.getElementById("result").innerHTML = `<h3>당신의 관계 유형은: ${type}</h3><p>${descriptions[type]}</p>`;
+      document.getElementById("result").innerHTML = `
+        <h3>당신의 관계 유형은: ${type}</h3>
+        <p>${descriptions[type]}</p>
+        <p><strong>추천 활동:</strong> 엄마와의 관계온도를 높이고 싶다면? <a href='https://graceb007.github.io/saiculture/' target='_blank' style='color:#d94b67; text-decoration:underline;'>‘엄마랑 1박 2일’ 캠프 지금 보러가기 →</a></p>
+        <div style='margin-top:1rem;'>
+  <strong>공유하기:</strong><br>
+  <a href='https://share.kakao.com/talk?url=https://graceb007.github.io/saiculture/&text=우리사이%20관계온도테스트에서%20${type}%20유형이%20나왔어요!' target='_blank'>💛 카카오톡으로 공유하기</a>
+</div>`;
     }
   </script>
 </body>
